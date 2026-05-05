@@ -1,22 +1,27 @@
 import nmap
-from datetime import datetime
-import json
 import os
+import json
+from datetime import datetime
 
 
 def run_scan(target):
     nm = nmap.PortScanner()
 
-    print(f"[+] Escaneando {target}...\n")
+    print(f"[+] Iniciando scan em {target}...\n")
 
-    # Scan avançado
-    nm.scan(hosts=target, arguments='-sS -sV -O -T4 -Pn --script vuln')
+    try:
+        nm.scan(hosts=target, arguments='-sS -sV -O -T4 -Pn --script vuln')
+    except Exception as e:
+        print(f"[ERRO] Falha ao executar scan: {e}")
+        return {}
 
     results = {}
 
     for host in nm.all_hosts():
 
-        # Coletar sistema operacional
+        # =========================
+        # SISTEMA OPERACIONAL
+        # =========================
         os_info = nm[host].get('osmatch', [])
 
         results[host] = {
@@ -24,24 +29,40 @@ def run_scan(target):
             "ports": []
         }
 
+        # =========================
+        # PORTAS / SERVIÇOS
+        # =========================
         for proto in nm[host].all_protocols():
+
             ports = nm[host][proto].keys()
 
             for port in ports:
 
-                port_data = nm[host][proto][port]
+                try:
+                    port_data = nm[host][proto][port]
+                except KeyError:
+                    continue
 
                 service = port_data.get('name', '')
                 version = port_data.get('version', '')
                 product = port_data.get('product', '')
                 extrainfo = port_data.get('extrainfo', '')
+                state = port_data.get('state', '')
+
+                # =========================
+                # SCRIPTS DO NMAP (VULN, BANNER, ETC)
+                # =========================
+                scripts = port_data.get('script', {})
 
                 results[host]["ports"].append({
                     "port": port,
+                    "protocol": proto,
+                    "state": state,
                     "service": service,
-                    "version": version,
                     "product": product,
-                    "extra": extrainfo
+                    "version": version,
+                    "extra": extrainfo,
+                    "scripts": scripts
                 })
 
     save_log(target, results)
@@ -49,13 +70,21 @@ def run_scan(target):
     return results
 
 
+# =========================
+# SALVAR LOG
+# =========================
 def save_log(target, results):
+
     if not os.path.exists("logs"):
         os.makedirs("logs")
 
     filename = f"logs/{target}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
 
-    with open(filename, "w") as f:
-        json.dump(results, f, indent=4)
+    try:
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=4, ensure_ascii=False)
 
-    print(f"\n[+] Log salvo em {filename}")
+        print(f"\n[+] Log salvo em: {filename}")
+
+    except Exception as e:
+        print(f"[ERRO] Falha ao salvar log: {e}")
