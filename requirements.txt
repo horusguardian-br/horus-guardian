@@ -1,0 +1,3 @@
+python-nmap
+reportlab
+requests
