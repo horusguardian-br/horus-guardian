@@ -9,7 +9,8 @@ Ferramenta de Pentest e Análise de Vulnerabilidades com integração de CVE e g
 - 🌐 Integração com CVEs reais
 - 📊 Score de risco com CVSS
 - 📄 Geração de relatórios em PDF
-🔹 3. O que a ferramenta faz
+  
+🔹 O que a ferramenta faz
 
 O Horus Guardian é uma plataforma de análise de segurança ofensiva e avaliação de risco, capaz de:
 
@@ -22,6 +23,7 @@ O Horus Guardian é uma plataforma de análise de segurança ofensiva e avaliaç
    - Gerar relatórios técnicos automatizados 
 
 🔹 Principais recursos disponíveis
+
 🔍 Scanner Avançado
 
    - Varredura com técnicas stealth
