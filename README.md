@@ -21,7 +21,7 @@ O Horus Guardian é uma plataforma de análise de segurança ofensiva e avaliaç
    - Calcular risco com base em CVSS
    - Gerar relatórios técnicos automatizados 
 
-🔹 4. Principais recursos disponíveis
+🔹 Principais recursos disponíveis
 🔍 Scanner Avançado
 
    - Varredura com técnicas stealth
@@ -68,7 +68,7 @@ O Horus Guardian é uma plataforma de análise de segurança ofensiva e avaliaç
    - Histórico de análises
    - Base para auditoria e rastreabilidade 
 
-🔹 5. Por que a ferramenta é eficaz
+🔹Por que a ferramenta é eficaz
 ✔ Integra múltiplas camadas de análise
 
 Não depende apenas de portas abertas — correlaciona:
