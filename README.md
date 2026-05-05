@@ -17,3 +17,7 @@ git clone https://github.com/seuusuario/horus-guardian.git
 cd horus-guardian
 
 pip install -r requirements.txt
+
+## ▶️ Uso
+
+python3 main.py
